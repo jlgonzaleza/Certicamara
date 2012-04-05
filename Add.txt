@@ -1,0 +1,48 @@
+public static int Add(String number) throws Exception{
+        int sum = 0;
+        List<String> delimitadores = new ArrayList<>();
+        List<Integer> negativos = new ArrayList<>();
+        if(number.startsWith("//")){
+            String[] num = number.substring(2).split("\n");
+            number = num[1];
+            String aux  = num[0];
+            num = num[0].split("]");
+            if(num.length == 0){
+                delimitadores.add(aux);
+            }else{
+                for(String ss : num){
+                    delimitadores.add(ss.substring(1));
+                }
+            }        
+                    
+                    
+        }else{
+        delimitadores.add(",");
+        delimitadores.add("\n");
+        }
+        for(String ss : delimitadores){
+            number = number.replace(ss, ":");
+        }
+       
+       String[] num = number.split(":");
+       int aux;
+       for(String ss : num){
+           if(!ss.isEmpty()){
+           aux = Integer.parseInt(ss);
+           if(aux<0){
+               negativos.add(aux);
+           }else if(aux<=1000){
+               sum+=aux;
+           }
+           }
+       }
+       
+       if(!negativos.isEmpty()){
+           String mensaje = "negatives not allowed ";
+           for(Integer ss : negativos){
+               mensaje += ss+" ";
+           }
+           throw new Exception(mensaje);
+       }
+        return sum;
+    }
